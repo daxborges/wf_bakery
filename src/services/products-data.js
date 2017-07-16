@@ -1,4 +1,4 @@
-{
+const inventoryItems = {
   "treats": [
     {
       "id": 1,
@@ -38,4 +38,7 @@
       "bulkPricing": null
     }
   ]
-}
+};
+
+export default inventoryItems;
+

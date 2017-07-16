@@ -1,8 +1,9 @@
 import React from 'react';
+import TreatDisplayCase from './scenes/DisplayCase';
 
 const App = () => (
   <div>
-    Hello Delicious World
+    <TreatDisplayCase />
   </div>
 );
 

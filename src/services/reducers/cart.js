@@ -35,7 +35,15 @@ export const updateItemCartQty = (state = [], id, qtyChaneAmt = 0) => {
     newState = [...state, { id , qty: ensureCartItemQty(0, qtyChaneAmt) }]
   }
 
-  return newState.filter((item) => { return item.qty > 0 });
+  return newState.filter((item) => { return item.qty > 0 }).sort((item1, item2) => {
+    if(item1.id < item2.id) {
+      return -1;
+    } else if (item1.id == item2.id) {
+      return 0;
+    } else {
+      return 1;
+    }
+  });
 };
 
 /**

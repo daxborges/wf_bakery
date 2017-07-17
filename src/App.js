@@ -1,9 +1,11 @@
 import React from 'react';
-import TreatDisplayCase from './scenes/DisplayCase';
+import DisplayCase from './scenes/DisplayCase';
+import CheckoutCounter from './scenes/CheckoutCounter';
 
 const App = () => (
   <div>
-    <TreatDisplayCase />
+    <DisplayCase />
+    <CheckoutCounter />
   </div>
 );
 

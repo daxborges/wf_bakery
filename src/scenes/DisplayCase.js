@@ -17,7 +17,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  onAddToCartClick: addToCart
+  onAddToCart: addToCart
 };
 
 const DisplayCase = connect(

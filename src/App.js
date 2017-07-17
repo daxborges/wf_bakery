@@ -3,9 +3,13 @@ import DisplayCase from './scenes/DisplayCase';
 import CheckoutCounter from './scenes/CheckoutCounter';
 
 const App = () => (
-  <div>
-    <DisplayCase />
-    <CheckoutCounter />
+  <div className="wrapper">
+    <div className="left-column">
+      <DisplayCase />
+    </div>
+    <div className="right-column">
+      <CheckoutCounter />
+    </div>
   </div>
 );
 

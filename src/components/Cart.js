@@ -3,10 +3,17 @@ import PropTypes from 'prop-types'
 import CartItem from './CartItem';
 
 const Cart = ({ cartItems, grandTotal }) => {
+  const checkoutClick = () => {
+    window.alert('Not the most robust checkout');
+  }
+
   if (cartItems.length) {
     return (
-      <div>
-        <ul>
+      <div className="cart">
+        <div className="cart__header">
+          <h2 className="h2">Cart</h2>
+        </div>
+        <ul className="cart__body">
           {cartItems.map(cartItem =>
             <CartItem
               key={cartItem.id}
@@ -14,13 +21,25 @@ const Cart = ({ cartItems, grandTotal }) => {
             />
           )}
         </ul>
-        Total: ${grandTotal}
+        <div className="cart__footer">
+          <div className="h3 cart__total">Total: ${grandTotal}</div>
+          <button
+            className="button cart__checkout-button"
+            onClick={checkoutClick}>Checkout</button>
+        </div>
       </div>
     );
   } else {
     return (
-      <div>
-        <b>Your cart is empty</b>
+      <div className="cart">
+        <div className="cart__header">
+          <h2 className="h2">Cart</h2>
+        </div>
+        <div className="cart__body">
+          <b>Your cart is empty</b>
+        </div>
+        <div className="cart__footer">
+        </div>
       </div>);
   }
 };

@@ -3,17 +3,15 @@ import PropTypes from 'prop-types'
 import Item from './InventoryItem';
 
 const Inventory = ({ inventoryItems, onAddToCart }) => (
-  <div>
-    <ul>
-      {inventoryItems.map(item =>
-        <Item
-          key={item.id}
-          {...item}
-          onAddToCart={() => onAddToCart(item.id)}
-        />
-      )}
-    </ul>
-  </div>
+  <ul className="inventory">
+    {inventoryItems.map(item =>
+      <Item
+        key={item.id}
+        {...item}
+        onAddToCart={() => onAddToCart(item.id)}
+      />
+    )}
+  </ul>
 );
 
 Inventory.propTypes = {

@@ -2,12 +2,23 @@ import actionTypes from '../actions/actionTypes';
 import { isInteger } from 'lodash';
 
 /**
+ *
+ * @param oldQty
+ * @param qtyChaneAmt
+ * @returns {number}
+ */
+export const ensureCartItemQty = (oldQty, qtyChaneAmt) => {
+  return Math.max(0, oldQty + qtyChaneAmt);
+};
+
+/**
  * Adds an item to the cart
  * @param state
  * @param id
+ * @param qtyChaneAmt
  * @returns {*}
  */
-const addItemToCart = (state = [], id) => {
+export const updateItemCartQty = (state = [], id, qtyChaneAmt = 0) => {
   if(!isInteger(id)) {
     return state;
   }
@@ -15,13 +26,16 @@ const addItemToCart = (state = [], id) => {
     return item.id === id;
   });
 
+  let newState;
   if(existingItem) {
-    return state.map((item) => {
-      return item.id === id ? {...existingItem, qty: existingItem.qty + 1} : item;
+    newState = state.map((item) => {
+      return item.id === id ? { ...existingItem, qty: ensureCartItemQty(existingItem.qty, qtyChaneAmt)} : item;
     });
   } else {
-    return [...state, { id , qty: 1 }]
+    newState = [...state, { id , qty: ensureCartItemQty(0, qtyChaneAmt) }]
   }
+
+  return newState.filter((item) => { return item.qty > 0 });
 };
 
 /**
@@ -33,7 +47,9 @@ const addItemToCart = (state = [], id) => {
 const cart = (state = [], action) => {
   switch (action.type) {
     case actionTypes.ADD_TO_CART:
-      return addItemToCart(state, action.id);
+      return updateItemCartQty(state, action.id, 1);
+    case actionTypes.REMOVE_FROM_CART:
+      return updateItemCartQty(state, action.id, -1);
     default:
       return state
   }

@@ -163,6 +163,11 @@ body,
   font-size: 2rem;
   padding: 10px 0px;
 }
+.cart__checkout-button {
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+}
 
 .cart-item {
   padding-bottom: 7px;
@@ -180,8 +185,13 @@ body,
   padding-top: 2px;
   text-align: right;
 }
-.cart__checkout-button {
-  padding: 10px;
-  width: 100%;
+.cart-item__button-left {
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
 }
+.cart-item__button-right {
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
 

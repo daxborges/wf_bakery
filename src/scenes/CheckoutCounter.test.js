@@ -1,4 +1,5 @@
 import {
+  formatDecimals,
   getInventoryItem,
   calculateLineItemsTotal,
   getCartItemLineItems,
@@ -83,6 +84,25 @@ describe('getCartItemLineItems', () => {
     expect(getCartItemLineItems(bulkInventoryItemBrownie, complexBulkCartItemBrownie).length).toEqual(2);
   });
 
+  it('each line item should be of the proper format', () => {
+    const lineItems = getCartItemLineItems(bulkInventoryItemBrownie, complexBulkCartItemBrownie);
+    expect(lineItems[0]).toEqual(expect.objectContaining({
+      qty: 3,
+      price: formatDecimals(bulkInventoryItemBrownie.price),
+      amount: 1
+    }));
+    expect(lineItems[0]).toEqual(expect.objectContaining({
+      qty: 3,
+      price: formatDecimals(bulkInventoryItemBrownie.price),
+      amount: 1
+    }));
+    expect(lineItems[1]).toEqual(expect.objectContaining({
+      qty: 4,
+      price: formatDecimals(bulkInventoryItemBrownie.bulkPricing.totalPrice),
+      amount: bulkInventoryItemBrownie.bulkPricing.amount
+    }));
+  });
+
   it('should properly split bulk item quantities', () => {
     const lineItems = getCartItemLineItems(bulkInventoryItemBrownie, complexBulkCartItemBrownie);
     expect(lineItems[0].qty).toEqual(3);
@@ -91,8 +111,8 @@ describe('getCartItemLineItems', () => {
 
   it('should properly attribute prices to each line item', () => {
     const lineItems = getCartItemLineItems(bulkInventoryItemBrownie, complexBulkCartItemBrownie);
-    expect(lineItems[0].price).toEqual(2.00);
-    expect(lineItems[1].price).toEqual(7.00);
+    expect(lineItems[0].price).toEqual(formatDecimals(2));
+    expect(lineItems[1].price).toEqual(formatDecimals(7));
   });
 
 });
@@ -134,11 +154,13 @@ describe('getCartItems', () => {
     expect(cartItem).toEqual(expect.objectContaining({
       'id': 2,
       'lineItems': [{
-        'price': 8,
-        'qty': 4
+        'price': formatDecimals(8),
+        'qty': 4,
+        'amount': 1
       }],
       'name': 'Key Lime Cheesecake', 
-      'total': 32}));
+      'total': 32
+    }));
   });
 
 });

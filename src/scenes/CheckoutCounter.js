@@ -1,6 +1,15 @@
 import { connect } from 'react-redux';
-import { addToCart } from '../services/actions';
+import {
+  addToCart,
+  removeFromCart
+} from '../services/actions';
 import Cart from '../components/Cart';
+
+/**
+ * Format our decimals to have two 0
+ * @param num
+ */
+export const formatDecimals = (num) => (parseFloat(Math.round(num * 100) / 100).toFixed(2));
 
 /**
  * Find an inventory item by its id
@@ -13,6 +22,7 @@ export const getInventoryItem = (inventoryItems = [], id) => {
     return item.id === id;
   });
 };
+
 
 /**
  * Calculate the total price for any number of line items
@@ -35,11 +45,12 @@ export const calculateLineItemsTotal = (lineItems = []) => {
  */
 export const getCartItemLineItems = (inventoryItem, cartItem) => {
   const nonBulkQty = inventoryItem.bulkPricing ? cartItem.qty % inventoryItem.bulkPricing.amount : cartItem.qty;
+  const bulkAmount = inventoryItem.bulkPricing ? inventoryItem.bulkPricing.amount : 0;
   const bulkQty = inventoryItem.bulkPricing ? Math.floor(cartItem.qty / inventoryItem.bulkPricing.amount) : 0;
   const bulkPrice = inventoryItem.bulkPricing ? inventoryItem.bulkPricing.totalPrice : 0;
   return [
-    { qty: nonBulkQty, price: inventoryItem.price },
-    { qty: bulkQty, price: bulkPrice }
+    { qty: nonBulkQty, price: formatDecimals(inventoryItem.price), amount: 1 },
+    { qty: bulkQty, price: formatDecimals(bulkPrice), amount: bulkAmount }
   ].filter((item) => item.qty !== 0);
 };
 
@@ -99,12 +110,13 @@ export const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  onAddToCartClick: addToCart
+  onAddToCart: addToCart,
+  onRemoveFromCart: removeFromCart
 };
 
 const CheckoutCounter = connect(
-  mapStateToProps//,
-  //mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Cart);
 
 export default CheckoutCounter;

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import CartItem from './CartItem';
 
-const Cart = ({ cartItems, grandTotal }) => {
+const Cart = ({ cartItems, grandTotal, onAddToCart, onRemoveFromCart }) => {
   const checkoutClick = () => {
     window.alert('Not the most robust checkout');
   }
@@ -18,6 +18,8 @@ const Cart = ({ cartItems, grandTotal }) => {
             <CartItem
               key={cartItem.id}
               {...cartItem}
+              onAddToCart={() => onAddToCart(cartItem.id)}
+              onRemoveFromCart={() => onRemoveFromCart(cartItem.id)}
             />
           )}
         </ul>
@@ -48,8 +50,9 @@ Cart.propTypes = {
   cartItems: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     lineItems: PropTypes.arrayOf(PropTypes.shape({
-      price: PropTypes.number,
-      qty: PropTypes.number
+      price: PropTypes.string,
+      qty: PropTypes.number,
+      amount: PropTypes.number
     })),
     name: PropTypes.string,
     total: PropTypes.number

@@ -12,6 +12,6 @@ npm start
 npm test a
 ```
 
-##TODO
+## TODO
 - save cart to localStorage.
 - remove product-data from build. Instead make request to server for it.
